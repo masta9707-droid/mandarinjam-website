@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order status — Mandarin Jam</title>
+<style>
+  :root{ --bg:#faf8f5; --card:#ffffff; --ink:#1f1a15; --mut:#8a8176; --accent:#9a4d2e; --ok:#2f7d46; --warn:#a3721d; --bad:#b3402a; --line:#e8e1d8; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--ink); }
+  .wrap{ max-width:560px; margin:0 auto; padding:40px 20px; }
+  .brand{ font-weight:700; letter-spacing:.02em; color:var(--ink); margin-bottom:28px; }
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:28px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+  h1{ font-size:20px; margin:0 0 6px; }
+  .sub{ color:var(--mut); font-size:14px; margin:0 0 22px; }
+  .row{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--line); font-size:15px; }
+  .row:last-child{ border-bottom:0; }
+  .k{ color:var(--mut); }
+  .pill{ display:inline-block; padding:4px 12px; border-radius:999px; font-size:13px; font-weight:600; }
+  .st-pending{ background:#f4eef2; color:#7d4b6d; }
+  .st-paid{ background:#e6f3e9; color:var(--ok); }
+  .st-failed{ background:#f9e7e2; color:var(--bad); }
+  .st-onhold{ background:#f6efe2; color:var(--warn); }
+  .st-none{ background:#efeeec; color:var(--mut); }
+  .note{ margin-top:20px; font-size:13px; color:var(--mut); line-height:1.5; }
+  .spin{ display:none; color:var(--accent); font-size:13px; margin-top:14px; }
+  a{ color:var(--accent); }
+  .btn{ display:inline-block; margin-top:22px; padding:10px 18px; background:var(--accent); color:#fff; border-radius:9px; text-decoration:none; font-weight:600; font-size:14px; }
+  .err{ color:var(--bad); font-size:14px; margin-top:14px; }
+  .ref-h{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; color:var(--mut); word-break:break-all; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">Mandarin Jam</div>
+  <div class="card">
+    <h1 id="title">Checking your order…</h1>
+    <p class="sub" id="sub">Confirming payment status.</p>
+    <div id="rows"></div>
+    <div class="spin" id="spin">Still confirming… please wait.</div>
+    <div class="err" id="err" hidden></div>
+    <a class="btn" href="/" id="back">Back to shop</a>
+  </div>
+</div>
+<script>
+(function(){
+  var t = new URLSearchParams(location.search).get('t') || '';
+  var o = new URLSearchParams(location.search).get('o') || '';
+  var statusEl = document.getElementById('rows');
+  var title = document.getElementById('title');
+  var sub = document.getElementById('sub');
+  var err = document.getElementById('err');
+  var spin = document.getElementById('spin');
+  var back = document.getElementById('back');
+  // Ticket-bound flow (correction §R6.4 / R2): a naked orderId cannot substitute. The return flow
+  // issues a short-lived, owner-bound ticket (?t=) and the page redeems it ONCE. After a single
+  // successful redemption we strip the ticket from the URL and poll the ordinary OWNER-AUTHENTICATED
+  // status endpoint using the resolved order id — so legitimate pending polls never 404 (R03). If
+  // the session is not yet verified, route to the existing sign-in recovery (login modal) WITHOUT
+  // consuming the ticket (R01/R04).
+  if (!t && !o) {
+    title.textContent = 'Sign in to view your order.';
+    sub.textContent = 'Secure your session to see your payment status.';
+    back.href = '/';
+    back.textContent = 'Back to shop';
+    return;
+  }
+
+  var ST = {
+    none: {label:'Awaiting confirmation', cls:'st-none'},
+    pending:{label:'Awaiting payment', cls:'st-pending'},
+    authorized:{label:'Authorized — on hold', cls:'st-onhold'},
+    'on-hold':{label:'On hold — review', cls:'st-onhold'},
+    paid:{label:'Paid', cls:'st-paid'},
+    failed:{label:'Payment failed', cls:'st-failed'},
+    cancelled:{label:'Cancelled', cls:'st-none'}
+  };
+  function esc(s){ return String(s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];}); }
+  function render(d){
+    var pay = d.payment || {};
+    var s = ST[pay.status] || ST.none;
+    title.textContent = s.label;
+    sub.textContent = (pay.status==='paid') ? 'Your payment is confirmed.' :
+      (pay.status==='failed') ? 'Your payment was not completed. You can try again.' :
+      (pay.status==='on-hold') ? 'This order needs manual review. We will contact you.' : 'We received your payment request.';
+    statusEl.innerHTML =
+      '<div class="row"><span class="k">Order</span><span class="ref-h">'+esc(d.order.id)+'</span></div>' +
+      '<div class="row"><span class="k">Status</span><span class="pill '+s.cls+'">'+s.label+'</span></div>';
+    if (pay.status==='paid' || pay.status==='failed' || pay.status==='on-hold') { spin.style.display='none'; return true; }
+    return false;
+  }
+  function goLogin(){
+    var next = o ? ('/order-status?o='+encodeURIComponent(o)) : ('/order-status?t='+encodeURIComponent(t));
+    window.location.href = '/?login=1&next=' + encodeURIComponent(next);
+  }
+  var tries=0;
+  function pollOwner(){
+    if (!o) { resolveTicket(); return; }
+    fetch('/api/order/'+encodeURIComponent(o)+'/payment-status', {credentials:'same-origin'})
+      .then(function(r){
+        if (r.status===401 || r.status===403) { goLogin(); throw new Error('auth'); }
+        if (!r.ok) { throw new Error('status '+r.status); }
+        return r.json();
+      })
+      .then(function(d){
+        var done=render(d);
+        if(!done && ++tries<40){ spin.style.display='block'; setTimeout(pollOwner,3000); }
+      })
+      .catch(function(e){
+        if (e.message==='auth') return;
+        if (++tries<8){ spin.style.display='block'; setTimeout(pollOwner,3000); } else { err.hidden=false; err.textContent='Could not reach the status service. Please refresh.'; spin.style.display='none'; }
+      });
+  }
+  function resolveTicket(){
+    // Redeem the ticket ONCE; on success strip it from the URL and poll the owner-authenticated endpoint.
+    fetch('/api/payment/status?t='+encodeURIComponent(t), {credentials:'same-origin'})
+      .then(function(r){
+        if (r.status===401 || r.status===403) { goLogin(); throw new Error('auth'); }
+        if (!r.ok) { err.hidden=false; err.textContent='This order link is no longer valid.'; throw new Error('status '+r.status); }
+        return r.json();
+      })
+      .then(function(d){
+        if (!d || !d.order || !d.order.id) { err.hidden=false; err.textContent='This order link is no longer valid.'; return; }
+        var clean = '/order-status?o='+encodeURIComponent(d.order.id);
+        history.replaceState(null, '', clean);   // strip the single-use ticket from the URL
+        o = d.order.id; t = '';
+        var done=render(d);
+        if(!done){ spin.style.display='block'; setTimeout(pollOwner,3000); }
+      })
+      .catch(function(e){ if (e.message==='auth') return; });
+  }
+  if (t) resolveTicket(); else pollOwner();
+})();
+</script>
+</body>
+</html>

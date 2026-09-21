@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Mandarin Jam — Fashion &amp; accessories</title>
+<meta name="description" content="Mandarin Jam — fashion and accessories.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mandarin Jam">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Mandarin Jam — Fashion &amp; accessories">
+<meta property="og:description" content="Fashion and accessories.">
+<meta property="og:image" content="/assets/logo/owner-logo-white.png">
+<meta property="og:url" content="/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mandarin Jam — Fashion &amp; accessories">
+<meta name="twitter:image" content="/assets/logo/owner-logo-white.png">
+<!-- W8-R1-MONO: không tải Outfit — heading/body dùng Arial/Helvetica stack hệ thống -->
+<link rel="stylesheet" href="/style.css?v=v2feed2">
+<link rel="icon" type="image/png" href="/assets/logo/owner-logo-white.png">
+</head>
+<body id="top">
+<!-- ============ HEADER (W3 4.5: nav trái · logo giữa · tiện ích phải; mobile 1 hàng 72px) ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <!-- STOREFRONT 4A: bỏ brand/logo — trái header là Men · Women · Kids (fashion nav, chữ EN cố định 4 locale) -->
+    <nav class="header-nav" aria-label="Fashion departments">
+      <a href="/shop?department=men" data-dept="men" data-i18n-aria="dept_men_aria">Men</a>
+      <a href="/shop?department=women" data-dept="women" data-i18n-aria="dept_women_aria">Women</a>
+      <a href="/shop?department=kids" data-dept="kids" data-i18n-aria="dept_kids_aria">Kids</a>
+    </nav>
+    <div class="header-actions">
+      <button class="search-toggle" id="searchToggle" type="button" aria-label="Search" aria-expanded="false" aria-controls="searchPanel" data-i18n-aria="nav_search">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="hd-label" data-i18n="search">Search</span>
+      </button>
+      <div class="lang-switch" id="langSwitch">
+        <button class="lang-current" id="langCurrent" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span id="langCurrentFlag" hidden></span><span id="langCurrentLabel">EN</span>
+          <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu" role="listbox" aria-label="Language">
+          <button type="button" data-lang="vi" role="option">Tiếng Việt</button>
+          <button type="button" data-lang="en" role="option">English</button>
+          <button type="button" data-lang="zh" role="option">中文</button>
+          <button type="button" data-lang="ko" role="option">한국어</button>
+        </div>
+      </div>
+      <a class="cart-btn" href="/cart" aria-label="Bag" data-i18n-aria="nav_bag">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 7h12l1.2 12.2a1.5 1.5 0 0 1-1.5 1.8H6.3a1.5 1.5 0 0 1-1.5-1.8L6 7Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+        <span class="hd-label" data-i18n="cart">Bag</span><span class="cart-count" id="cartCount" hidden>0</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileDrawer">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- W3 4.5: search là panel mở từ nút icon -->
+  <form class="searchbar" id="searchPanel" hidden role="search" onsubmit="return doSearch(event)">
+    <input id="searchInput" type="search" placeholder="Search brands, products or SKU" data-i18n-ph="search_ph" aria-label="Search">
+    <button type="submit" aria-label="Search">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    </button>
+  </form>
+  <!-- STOREFRONT 4A: menu mobile — Home/All/Brands trên, tư vấn/social sau, ngôn ngữ cuối -->
+  <div class="mobile-drawer" id="mobileDrawer" hidden>
+    <nav class="drawer-nav" aria-label="Menu">
+      <a href="/" data-i18n="home">Home</a>
+      <a href="/shop" data-i18n="nav_all">All products</a>
+      <a href="/shop?focus=brand" data-i18n="nav_brands">Brands</a>
+      <span class="drawer-divider" aria-hidden="true"></span>
+      <a href="#contact" data-i18n="nav_consult">Consult</a>
+      <a href="#channels" data-i18n="nav_channels">Official channels</a>
+    </nav>
+    <div class="drawer-lang">
+      <span class="drawer-lang-label" data-i18n="nav_language">Language</span>
+      <div class="drawer-lang-options" role="listbox" aria-label="Language">
+        <button type="button" data-lang="vi">Tiếng Việt</button>
+        <button type="button" data-lang="en">English</button>
+        <button type="button" data-lang="zh">中文</button>
+        <button type="button" data-lang="ko">한국어</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="main"></div>
+<main id="app">
+  <!-- ============ HOME (W3 4.6: H1 ngắn + category strip + grid 8 món; không hero) ============ -->
+  <section id="page-home" class="page" hidden>
+  <!-- STOREFRONT 4D: campaign stage — ngay dưới header, trước hero. 0 slide = trắng hoàn toàn. -->
+  <div class="campaign-stage" id="campaignStage" aria-hidden="true" hidden>
+    <div class="campaign-track" id="campaignTrack"></div>
+    <div class="campaign-controls" id="campaignControls" hidden>
+      <button type="button" class="campaign-arrow prev" id="campaignPrev" aria-label="Previous"></button>
+      <div class="campaign-dots" id="campaignDots"></div>
+      <button type="button" class="campaign-arrow next" id="campaignNext" aria-label="Next"></button>
+    </div>
+  </div>
+  <!-- W4 B: hero bất đối xứng — text + lead product + 2 món phụ -->
+  <div class="hero">
+    <div class="hero-copy">
+      <h1 class="hero-title" data-i18n="home_heading">Gặp món bạn thích.</h1>
+      <p class="hero-body" data-i18n="home_body">Thời trang và phụ kiện được Mandarin Jam chọn lọc. Xem trên web, nhắn shop khi cần tư vấn.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="/shop" data-i18n="home_shop">Xem sản phẩm</a>
+        <a class="btn btn-ghost" href="#contact" data-i18n="home_chat">Nhắn tư vấn</a>
+      </div>
+    </div>
+    <div class="hero-media" id="heroMedia" aria-label="Sản phẩm nổi bật"></div>
+  </div>
+
+  <!-- W4 C: Khám phá thêm — 4 món khác 3 món hero -->
+  <div class="more">
+    <div class="more-head">
+      <h2 data-i18n="home_more">Khám phá thêm</h2>
+      <a class="link-all" href="/shop" data-i18n="home_all">Xem tất cả</a>
+    </div>
+    <div class="grid" id="featuredGrid" aria-busy="true">
+      <div class="grid-loading" data-i18n="grid_loading">Đang tải sản phẩm…</div>
+    </div>
+  </div>
+
+  <!-- W4 D: Chọn cách mua (#contact) -->
+  <section class="ways" id="contact">
+    <div class="ways-inner">
+      <h2 data-i18n="ways_heading">Chọn theo cách của bạn.</h2>
+      <div class="ways-grid">
+        <div class="way">
+          <h3 data-i18n="ways_web_title">Xem trước trên web</h3>
+          <p data-i18n="ways_web_body">Xem sản phẩm, giá và các lựa chọn đang có.</p>
+          <a class="btn btn-primary" href="/shop" data-i18n="home_shop">Xem sản phẩm</a>
+        </div>
+        <div class="way">
+          <h3 data-i18n="ways_chat_title">Nhắn shop để cùng chọn</h3>
+          <p data-i18n="ways_chat_body">Cần hỏi thêm về sản phẩm hoặc kích cỡ? Mandarin Jam sẽ tư vấn qua kênh bạn quen dùng.</p>
+          <div class="way-ctas">
+            <a class="btn btn-ghost" href="https://zalo.me/3481730554380561086" target="_blank" rel="noopener">Zalo</a>
+            <a class="btn btn-ghost" href="https://wa.me/message/6334U276WMGPB1" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- W4 E: Kênh chính thức (#channels), đủ 12 link cũ trong disclosure (#deal trong phần mở) -->
+  <section class="channels" id="channels">
+    <div class="channels-inner">
+      <h2 data-i18n="channels_heading">Vẫn là Mandarin Jam bạn quen.</h2>
+      <p class="channels-body" data-i18n="channels_body">Theo dõi hoặc nhắn shop qua các kênh chính thức dưới đây.</p>
+      <div class="channel-grid">
+        <a class="channel-link" href="https://instagram.com/mandarin.jam" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17" cy="7" r="0.9" fill="currentColor" stroke="none"/></svg>
+          <span>Instagram <span class="channel-note" data-i18n="ch_official">Official</span></span>
+        </a>
+        <a class="channel-link" href="https://facebook.com/profile.php?id=100064799557954" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 8.5V7c0-.8.7-1.5 1.5-1.5H17V2.8h-2.3A3.7 3.7 0 0 0 11 6.5v2H8.8V12H11v9.2h3V12h2.4l.6-3.5H14Z"/></svg>
+          <span>Facebook <span class="channel-note">Mandarin Jam</span></span>
+        </a>
+        <a class="channel-link" href="https://zalo.me/3481730554380561086" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5c-1.6 0-3.1-.4-4.4-1.2L3 20l1.2-5.1A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+          <span>Zalo <span class="channel-note" data-i18n="ch_chat">Chat</span></span>
+        </a>
+        <a class="channel-link" href="https://wa.me/message/6334U276WMGPB1" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5c-1.6 0-3.1-.4-4.4-1.2L3 20l1.2-5.1A8.5 8.5 0 1 1 21 11.5Z"/><path d="M9 9.5c.5 2.5 3 5 5.5 5.5l1-1.5 2 1c-.3 1.4-1.5 2-3 1.5-3-1-5.5-3.5-6.5-6.5-.5-1.5.1-2.7 1.5-3l1 2-1.5 1Z"/></svg>
+          <span>WhatsApp <span class="channel-note" data-i18n="ch_chat">Chat</span></span>
+        </a>
+      </div>
+      <button type="button" class="channels-toggle" id="channelsToggle" aria-expanded="false" aria-controls="channelsAll" data-i18n="channels_view_all">Xem tất cả kênh chính thức</button>
+      <div class="channels-all" id="channelsAll" hidden>
+        <p class="channels-all-note" data-i18n="channels_more_note">Các kênh và nhóm khác của Mandarin Jam:</p>
+        <div class="channel-grid channels-all-grid" id="deal">
+          <a class="channel-link" href="https://instagram.com/mandarinjam.h" target="_blank" rel="noopener">Instagram — @mandarinjam.h</a>
+          <a class="channel-link" href="https://www.instagram.com/mandarinjamagain/" target="_blank" rel="noopener">Instagram — @mandarinjamagain</a>
+          <a class="channel-link" href="https://www.instagram.com/mandarinjamcuteee" target="_blank" rel="noopener">Instagram — @mandarinjamcuteee</a>
+          <a class="channel-link" href="https://www.tiktok.com/@mandarin.jam" target="_blank" rel="noopener">TikTok — @mandarin.jam</a>
+          <a class="channel-link" href="https://www.tiktok.com/@mandarin.jam7" target="_blank" rel="noopener">TikTok — @mandarin.jam7</a>
+          <a class="channel-link" href="https://zalo.me/84858700997" target="_blank" rel="noopener">Zalo — <span data-i18n="ch_hotline">Hotline nhắn tin</span></a>
+          <a class="channel-link" href="https://zalo.me/g/eh1cvkrurimcu4num0qj" target="_blank" rel="noopener">Zalo — <span data-i18n="ch_group">Nhóm nhận ưu đãi</span></a>
+          <a class="channel-link" href="https://whatsapp.com/channel/0029VbCc3lfBPzjedUU5OI2l" target="_blank" rel="noopener">WhatsApp — <span data-i18n="ch_channel">Kênh theo dõi</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- W4 F: Thông tin mua hàng (#commitments) — 3 accordion, nội dung trỏ trang pháp lý hiện có -->
+  <section class="buyinfo" id="commitments">
+    <div class="buyinfo-inner">
+      <h2 data-i18n="info_title">Thông tin mua hàng</h2>
+      <details class="info-item">
+        <summary data-i18n="info_sourcing">Nguồn hàng</summary>
+        <p data-i18n-html="info_sourcing_body">Mỗi món vào kệ đều qua tuyển chọn. Chi tiết theo <a href="/legal/dieu-khoan-mua-ban">Điều khoản mua bán</a>.</p>
+      </details>
+      <details class="info-item">
+        <summary data-i18n="info_ship">Giao nhận và thanh toán</summary>
+        <p data-i18n-html="info_ship_body">Thời gian, phí và hình thức thanh toán được hiển thị trước khi bạn xác nhận. Xem <a href="/legal/van-chuyen">Vận chuyển</a>.</p>
+      </details>
+      <details class="info-item">
+        <summary data-i18n="info_support">Hỗ trợ sau mua</summary>
+        <p data-i18n-html="info_support_body">Hỗ trợ qua Zalo/WhatsApp; đổi trả theo <a href="/legal/doi-tra">Chính sách đổi trả</a>.</p>
+      </details>
+    </div>
+  </section>
+</section>
+
+<!-- ============ SHOP (SHOP-R1 4.3/4.4: desktop grid + mobile dialog) ============ -->
+  <section id="page-shop" class="page" hidden>
+    <div class="shop">
+      <div class="shop-head">
+        <h1 class="shop-title" id="shopHeading" data-i18n="nav_shop">Sản phẩm</h1>
+        <span class="shop-count" id="shopTotal">…</span>
+      </div>
+      <div class="shop-layout">
+        <div class="shop-main">
+          <div class="shop-toolbar" id="shopToolbar">
+            <div class="toolbar-main">
+              <button type="button" id="filterToggle" class="filter-toggle" aria-expanded="false" aria-controls="shopSidebar">
+                <span data-i18n="f_filter">Bộ lọc</span><span class="ft-count" id="fcount" hidden>0</span>
+              </button>
+              <label class="shop-sort">
+                <span data-i18n="f_sort">Sắp xếp</span>
+                <select id="fSort" class="shop-sort-select">
+                  <option value="default" data-i18n="sort_def">Mặc định</option>
+                  <option value="price-asc" data-i18n="sort_asc">Giá thấp → cao</option>
+                  <option value="price-desc" data-i18n="sort_desc">Giá cao → thấp</option>
+                </select>
+              </label>
+            </div>
+            <div class="toolbar-chips">
+              <div class="shop-chips" id="chips"></div>
+              <button type="button" id="clearAllWrap" class="clear-all button-reset" data-i18n="f_clear_all" hidden>Xóa tất cả</button>
+            </div>
+          </div>
+          <p class="result-meta" id="resultMeta"></p>
+          <div class="grid" id="shopGrid" aria-busy="true">
+            <div class="grid-loading" data-i18n="grid_loading">Đang tải sản phẩm…</div>
+          </div>
+          <div class="pager" id="pager"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATALOG-R1 §4A: filter panel trượt — drawer cạnh phải (>=1024) / bottom sheet (mobile).
+       Chip nút kiểu Manjam (bỏ tick/radio), draft→Apply, 2 ô giá USD. -->
+  <div class="fp-backdrop" id="fpBackdrop" hidden></div>
+  <div class="filter-panel" id="filterPanel" role="dialog" aria-modal="true" aria-labelledby="fpTitle" hidden>
+    <div class="fp-head">
+      <h2 id="fpTitle" data-i18n="f_filter">Bộ lọc</h2>
+      <button type="button" id="fpClose" class="fp-close" aria-label="Đóng">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="fp-body" id="fpBody" tabindex="-1"></div>
+    <div class="fp-foot">
+      <button type="button" id="fpReset" class="fp-reset" data-i18n="f_reset">Đặt lại</button>
+      <button type="button" id="fpApply" class="fp-apply"><span data-i18n="f_apply">Áp dụng</span></button>
+    </div>
+  </div>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="page-about" class="page" hidden>
+    <div class="narrow about">
+      <p class="about-kicker" data-i18n="nav_about">Về Mandarin Jam</p>
+      <h2 data-i18n="about_title">Tuyển chọn chính hãng,<br>kiểm chứng nguồn gốc từng món</h2>
+      <p class="about-lede">Mandarin Jam là bộ sưu tập thời trang và phụ kiện chính hãng. Chúng tôi không bày hàng đại trà: mỗi món vào kệ đều qua tuyển chọn và được kiểm chứng nguồn gốc trước khi bạn nhìn thấy nó trên trang.</p>
+      <div class="about-steps">
+        <div class="about-step">
+          <span class="step-num">1</span>
+          <h3 data-i18n="about_s1_h">Tuyển chọn</h3>
+          <p>Chọn từng món từ các đối tác cung ứng chính hãng — theo thương hiệu, chất lượng và độ phù hợp với bộ sưu tập. Không phải món nào cũng vào kệ.</p>
+        </div>
+        <div class="about-step">
+          <span class="step-num">2</span>
+          <h3 data-i18n="about_s2_h">Kiểm chứng</h3>
+          <p>Trước khi lên kệ, mỗi món được kiểm tra chính hãng và kiểm chứng nguồn gốc. Món không có đủ căn cứ nguồn gốc sẽ không được bày bán.</p>
+        </div>
+        <div class="about-step">
+          <span class="step-num">3</span>
+          <h3 data-i18n="about_s3_h">Mã đối chiếu</h3>
+          <p>Mỗi món có một mã sản phẩm riêng (MJ-…) hiển thị ngay trên trang chi tiết. Khi nhận hàng, bạn đối chiếu mã này với đúng món bạn mua.</p>
+        </div>
+      </div>
+      <p data-i18n="about_price">Giá niêm yết bằng VND, hiển thị rõ trên từng món — không giá ảo.</p>
+      <div class="about-cta"><a class="btn btn-primary" href="/shop" data-i18n="cta_shop">Xem cửa hàng</a></div>
+    </div>
+  </section>
+
+  <!-- ============ PDP ============ -->
+  <section id="page-product" class="page" hidden>
+    <div id="pdpWrap" class="pdp"></div>
+  </section>
+
+  <!-- ============ CART ============ -->
+  <section id="page-cart" class="page" hidden>
+    <div class="narrow">
+      <h2 data-i18n="cart_title">Giỏ hàng</h2>
+      <div id="cartBody" class="cart-body"></div>
+    </div>
+  </section>
+
+  <!-- ============ CHECKOUT ============ -->
+  <section id="page-checkout" class="page" hidden>
+    <div class="narrow">
+      <h2 data-i18n="checkout_title">Thanh toán</h2>
+      <div class="demo-banner">
+        <strong>Thanh toán trực tuyến chưa khả dụng — hiện chỉ nhận đặt hàng qua COD.</strong>
+        <span>Thông tin đơn của bạn được lưu để xác nhận; không phát sinh phí khi đặt.</span>
+      </div>
+      <div id="checkoutBody" class="checkout-body"></div>
+    </div>
+  </section>
+  <section id="page-order" class="page" hidden></section>
+  <section id="page-legal" class="page" hidden></section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <!-- FOOTER-EDITORIAL: 4 nhóm link desktop / 3 accordion mobile (Customer Service mở sẵn) + Contact luôn hiện.
+         Tên cá nhân không hiển thị; email công khai chỉ bật khi forward được cấu hình (EMAIN_PUBLIC=0). -->
+    <div class="footer-links">
+      <div class="footer-col" data-acc data-open>
+        <div class="footer-heading" tabindex="0" role="button" aria-expanded="true" aria-controls="facc1" data-i18n="footer_care">Customer Service</div>
+        <ul class="footer-nav" id="facc1">
+          <li><a href="/legal/khieu-nai" data-i18n="f_contact_us">Contact us</a></li>
+          <li><a href="/legal/van-chuyen" data-i18n="f_orders_delivery">Orders &amp; delivery</a></li>
+          <li><a href="/legal/doi-tra" data-i18n="f_returns_refunds">Returns &amp; refunds</a></li>
+          <li><a href="/legal/thanh-toan" data-i18n="f_payment_pricing">Payment &amp; pricing</a></li>
+          <li><a href="/legal/cau-hoi-thuong-gap" data-i18n="f_faqs">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" data-acc>
+        <div class="footer-heading" tabindex="0" role="button" aria-expanded="false" aria-controls="facc2" data-i18n="footer_about">About Mandarin Jam</div>
+        <ul class="footer-nav" id="facc2">
+          <li><a href="/about" data-i18n="nav_about">About us</a></li>
+          <li><a href="/legal/nguon-goc-tinh-trang" data-i18n="f_authenticity">Authenticity &amp; condition</a></li>
+          <li><a href="/legal/ve-chung-toi" data-i18n="f_company">Company information</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" data-acc>
+        <div class="footer-heading" tabindex="0" role="button" aria-expanded="false" aria-controls="facc3" data-i18n="footer_terms">Information &amp; policies</div>
+        <ul class="footer-nav" id="facc3">
+          <li><a href="/legal/dieu-khoan-mua-ban" data-i18n="f_terms">Terms &amp; conditions</a></li>
+          <li><a href="/legal/quyen-rieng-tu" data-i18n="f_privacy">Privacy policy</a></li>
+          <li><a href="/legal/cookie" data-i18n="f_cookie">Cookie policy</a></li>
+          <li><a href="/legal" data-i18n="footer_legal_all">All policies</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <p class="footer-heading-static" data-i18n="footer_channels">Contact &amp; follow</p>
+        <ul class="footer-nav" id="facc4">
+          <li class="footer-email" data-email-block hidden><a href="mailto:support@mandarinjam.club" data-i18n="f_customer_enq">Customer enquiries</a></li>
+          <li class="footer-email" data-email-block2 hidden><a href="mailto:hello@mandarinjam.club" data-i18n="f_general_enq">General enquiries &amp; partnerships</a></li>
+          <li class="footer-follow" data-i18n="f_follow">Follow us</li>
+          <li class="footer-social">
+            <a class="social-icon" href="https://instagram.com/mandarin.jam" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17" cy="7" r="0.9" fill="currentColor" stroke="none"/></svg></a>
+            <a class="social-icon" href="https://www.tiktok.com/@mandarin.jam" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.4 2.2 1.8 3.7 4.4 4v3c-1.6 0-3-.5-4.4-1.3v6.2c0 3.4-2.8 6-6.3 6-2.6 0-4.8-1.6-5.7-3.9C3.7 14.6 5.8 11.5 9 11c.1 1 .6 2 1.6 2.4-.9.5-1.5 1.5-1.5 2.7A3 3 0 0 0 12 19a3 3 0 0 0 2.9-3V3h1.7Z"/></svg></a>
+            <a class="social-icon" href="https://www.facebook.com/profile.php?id=100064799557954" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M14 8.5V7c0-.8.7-1.5 1.5-1.5H17V2.8h-2.3A3.7 3.7 0 0 0 11 6.5v2H8.8V12H11v9.2h3V12h2.4l.6-3.5H14Z"/></svg></a>
+            <a class="social-icon" href="https://zalo.me/3481730554380561086" target="_blank" rel="noopener" aria-label="Zalo"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5c-1.6 0-3.1-.4-4.4-1.2L3 20l1.2-5.1A8.5 8.5 0 1 1 21 11.5Z"/></svg></a>
+            <a class="social-icon" href="https://wa.me/message/6334U276WMGPB1" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5c-1.6 0-3.1-.4-4.4-1.2L3 20l1.2-5.1A8.5 8.5 0 1 1 21 11.5Z"/><path d="M9 9.5c.5 2.5 3 5 5.5 5.5l1-1.5 2 1c-.3 1.4-1.5 2-3 1.5-3-1-5.5-3.5-6.5-6.5-.5-1.5.1-2.7 1.5-3l1 2-1.5 1Z"/></svg></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FOOTER-EDITORIAL 4.3: dải thanh toán — chỉ hiển thị khi có method được chứng minh (hiện ẩn) -->
+    <div class="footer-pay" data-payment-row hidden>
+      <span class="pay-label" data-i18n="f_payment_row">Accepted payment methods</span>
+      <span class="pay-icons"><span data-pay-icons></span></span>
+    </div>
+
+    <!-- FOOTER-EDITORIAL 4.4: hàng doanh nghiệp — THT GLOBAL + hai pháp nhân -->
+    <div class="footer-company">
+      <div class="co-head">
+        <span class="co-name">THT GLOBAL</span>
+        <span class="co-brand-line" data-i18n="footer_line">Designer clothing and accessories.</span>
+      </div>
+      <div class="co-grid">
+        <div class="co-block">
+          <p class="co-entity">THT GLOBAL LIMITED — Hong Kong · Website operator</p>
+          <p class="co-detail">Company No. 78843181 · Business Registration No. 78843181-000-09-25-0</p>
+          <p class="co-detail">Registered office: Unit B53, 2/F, Kwai Shing Industrial Building Phase 1, 36–40 Tai Lin Pai Road, Kwai Chung, New Territories, Hong Kong.</p>
+        </div>
+        <div class="co-block">
+          <p class="co-entity">THT GLOBAL LLC — United States · Affiliated company</p>
+          <p class="co-detail">Delaware File No. 6682582</p>
+          <p class="co-detail">Registered office: 838 Walker Road, Suite 21-2, Dover, Delaware 19904, United States.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="footer-legal"><span>© <span data-year></span> Mandarin Jam — THT GLOBAL.</span><span class="fl-links"><a href="/legal/quyen-rieng-tu" data-i18n="f_privacy">Privacy policy</a><a href="/legal/dieu-khoan-mua-ban" data-i18n="f_terms">Terms &amp; conditions</a><a href="/legal/cookie" data-i18n="f_cookie">Cookie policy</a></span></p>
+  </div>
+</footer>
+
+<div id="toast" class="toast" hidden></div>
+<noscript>
+  <div class="noscript-banner" role="note">
+    <p lang="vi"><strong>Trình duyệt đang tắt JavaScript.</strong> Bạn vẫn có thể liên hệ shop qua Zalo hoặc WhatsApp; danh mục và mua hàng cần bật JavaScript.</p>
+    <p lang="en"><strong>JavaScript is disabled.</strong> You can still reach the shop on Zalo or WhatsApp; the catalogue and checkout require JavaScript.</p>
+    <p class="noscript-links">
+      <a href="https://zalo.me/3481730554380561086" target="_blank" rel="noopener">Zalo</a>
+      <a href="https://wa.me/message/6334U276WMGPB1" target="_blank" rel="noopener">WhatsApp</a>
+    </p>
+  </div>
+</noscript>
+<script src="/logo-float.js"></script>
+<script src="/policies.js"></script>
+<script src="/app.js?v=v2feed2"></script>
+<script src="/account.js?v=1"></script>
+</body>
+</html>

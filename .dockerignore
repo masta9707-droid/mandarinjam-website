@@ -1,0 +1,10 @@
+# never ship local dev/build artifacts into image
+node_modules
+.git
+data
+cache
+_work*
+_work_tmp
+docs
+*.log
+.gitignore
